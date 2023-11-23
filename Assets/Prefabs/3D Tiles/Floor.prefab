@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 1354836946701780906}
   m_Layer: 0
   m_Name: Floor
-  m_TagString: Untagged
+  m_TagString: Terrain
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -85,8 +85,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 2.0264387, y: 2.005202, z: 2.2246475}
+  m_Center: {x: 0.0035395622, y: -0.0070785284, z: -0.0035395622}
 --- !u!1001 &833374282241601517
 PrefabInstance:
   m_ObjectHideFlags: 0
