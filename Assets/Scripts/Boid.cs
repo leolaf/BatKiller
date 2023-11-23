@@ -31,6 +31,7 @@ public class Boid : MonoBehaviour
 
     private void FixedUpdate()
     {
+
         List<Boid> closeBoids = new List<Boid>();
         foreach (Boid boid in allBoids)
         {
@@ -76,7 +77,7 @@ public class Boid : MonoBehaviour
     {
         if (boids.Count < 1) { return; }
         // 100
-        velocity += (GetAvgPos2D(boids) - pos2D) / 100;
+        velocity += (GetAvgPos2D(boids) - pos2D) / 500;
     }
 
     void MoveWith(List<Boid> boids)
@@ -118,7 +119,7 @@ public class Boid : MonoBehaviour
         if (numClose == 0) { return; }
 
         // 5
-        velocity -= distanceDiff;
+        velocity -= distanceDiff * 5;
     }
 
     void MoveTowards(Vector3 pos)
@@ -148,6 +149,18 @@ public class Boid : MonoBehaviour
         {
             velocity.z = -velocity.z * Random.value;
         }
+
+        float distToGround = Mathf.Infinity;
+        foreach (RaycastHit hit in Physics.RaycastAll(pos2D + Vector3.up, Vector3.down, 2.5f))
+        {
+            if (hit.collider.tag == "Terrain")
+            {
+                distToGround = Mathf.Min(distToGround, hit.distance - 1);
+            }
+        }
+        if(distToGround < 10f) { velocity.y = Mathf.Abs(velocity.y); }
+
+        if(gameObject.name.StartsWith("Bat") && gameObject.name.Contains("1")) { Debug.Log($"Distance to ground {distToGround}"); }
 
         pos2D += velocity * Time.fixedDeltaTime;
     }
