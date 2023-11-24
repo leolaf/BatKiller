@@ -5208,14 +5208,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3635966515178185959, guid: e6a71183dbdab684b9a22b7542f1c75f, type: 3}
-      propertyPath: m_Size.z
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3635966515178185959, guid: e6a71183dbdab684b9a22b7542f1c75f, type: 3}
-      propertyPath: m_Center.z
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 9028655507555149320, guid: e6a71183dbdab684b9a22b7542f1c75f, type: 3}
       propertyPath: m_Name
       value: Bat (1)
