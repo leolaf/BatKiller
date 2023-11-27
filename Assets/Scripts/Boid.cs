@@ -160,8 +160,6 @@ public class Boid : MonoBehaviour
         }
         if(distToGround < 10f) { velocity.y = Mathf.Abs(velocity.y); }
 
-        if(gameObject.name.StartsWith("Bat") && gameObject.name.Contains("1")) { Debug.Log($"Distance to ground {distToGround}"); }
-
         pos2D += velocity * Time.fixedDeltaTime;
     }
 }

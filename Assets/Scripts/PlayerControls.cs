@@ -21,6 +21,18 @@ public class PlayerControls : MonoBehaviour
     private float verticalMovement = 0;
 
     private bool onGround = false;
+    private bool OnGround
+    {
+        get 
+        { 
+            return onGround; 
+        } 
+        set
+        {
+            onGround = value;
+            animator.SetBool("onGround", value);
+        }
+    }
 
     private Rigidbody rb;
 
@@ -38,7 +50,7 @@ public class PlayerControls : MonoBehaviour
         if(horizontalMovement != 0)
         {
             visuals.transform.rotation = Quaternion.Euler(0, 180 * (horizontalMovement < 0 ? 1 : 0), 0);
-            animator.SetFloat("speed", Mathf.Abs(horizontalMovement));
+            animator.SetFloat("speed", Mathf.Abs(horizontalMovement)*speed);
         }
         else
         {
@@ -46,7 +58,7 @@ public class PlayerControls : MonoBehaviour
         }
 
         verticalMovement = 0;
-        if (onGround)
+        if (OnGround)
         {
             verticalMovement = Input.GetAxis("Jump");
         }
@@ -66,7 +78,7 @@ public class PlayerControls : MonoBehaviour
     {
         if (collision.gameObject.tag == "Terrain")
         {
-            onGround = true;
+            OnGround = true;
         }
     }
 
@@ -74,7 +86,7 @@ public class PlayerControls : MonoBehaviour
     {
         if (collision.gameObject.tag == "Terrain")
         {
-            onGround = false;
+            OnGround = false;
         }
     }
 }
