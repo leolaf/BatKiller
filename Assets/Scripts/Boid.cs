@@ -61,7 +61,7 @@ public class Boid : MonoBehaviour
         foreach (Boid boid in boids)
         {
             if (boid.pos2D == pos2D) { continue; }
-            cumulgPos2D += boid.pos2D;
+            cumulgPos2D += boid.pos2D * (boid.pos2D - pos2D).magnitude;
         }
         return cumulgPos2D / (float)boids.Count;
     }
@@ -69,7 +69,7 @@ public class Boid : MonoBehaviour
     Vector3 GetAvgVelocity(List<Boid> boids)
     {
         Vector3 cumulVelocity = Vector3.zero;
-        foreach (Boid boid in boids) { cumulVelocity += boid.velocity; }
+        foreach (Boid boid in boids) { cumulVelocity += boid.velocity * (boid.pos2D - pos2D).magnitude; }
         return cumulVelocity / (float)boids.Count;
     }
 
@@ -84,7 +84,7 @@ public class Boid : MonoBehaviour
     {
         if (boids.Count < 1) { return; }
         // 40
-        velocity += GetAvgVelocity(boids) / 40;
+        velocity += GetAvgVelocity(boids) / 500;
     }
 
     void MoveAway(List<Boid> boids, float minDist)
@@ -112,7 +112,7 @@ public class Boid : MonoBehaviour
                 if (pos2DDiff.z >= 0) { pos2DDiff.z = Mathf.Sqrt(minDist) - pos2DDiff.z; }
                 else { pos2DDiff.z = -Mathf.Sqrt(minDist) - pos2DDiff.z; }
 
-                distanceDiff += pos2DDiff;
+                distanceDiff += pos2DDiff * (2 - (boid.pos2D - pos2D).magnitude*2);
             }
         }
 
@@ -124,7 +124,7 @@ public class Boid : MonoBehaviour
 
     void MoveTowards(Vector3 pos)
     {
-        velocity += (pos - pos2D) / 10;
+        velocity += (pos - pos2D) / 500;
     }
 
     float RandomGaussianDistribution()
@@ -138,9 +138,13 @@ public class Boid : MonoBehaviour
 
     void Move()
     {
-        if(velocity.magnitude > MAX_VELOCITY)
+        if (velocity.magnitude > MAX_VELOCITY)
         {
             velocity = velocity.normalized * MAX_VELOCITY;
+        }
+        if (velocity.magnitude < 0.1f)
+        {
+            velocity = velocity.normalized * 0.1f;
         }
 
         spriteRenderer.flipX = velocity.x < 0;
@@ -151,14 +155,24 @@ public class Boid : MonoBehaviour
         }
 
         float distToGround = Mathf.Infinity;
-        foreach (RaycastHit hit in Physics.RaycastAll(pos2D + Vector3.up, Vector3.down, 2.5f))
+        foreach (RaycastHit hit in Physics.RaycastAll(pos2D + Vector3.up, Vector3.down, 1.5f))
         {
             if (hit.collider.tag == "Terrain")
             {
                 distToGround = Mathf.Min(distToGround, hit.distance - 1);
             }
         }
-        if(distToGround < 10f) { velocity.y = Mathf.Abs(velocity.y); }
+        if (distToGround < 10f) { velocity.y = Mathf.Abs(velocity.y); }
+
+        float distToCeiling = Mathf.Infinity;
+        foreach (RaycastHit hit in Physics.RaycastAll(pos2D + Vector3.down, Vector3.up, 1.5f))
+        {
+            if (hit.collider.tag == "Terrain")
+            {
+                distToCeiling = Mathf.Min(distToCeiling, hit.distance - 1);
+            }
+        }
+        if (distToCeiling < 10f) { velocity.y = -Mathf.Abs(velocity.y); }
 
         pos2D += velocity * Time.fixedDeltaTime;
     }
