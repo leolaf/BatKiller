@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GodlikeMageState : MonoBehaviour
+public class GodlikeMageState : ClassState
 {
     // Start is called before the first frame update
     void Start()
