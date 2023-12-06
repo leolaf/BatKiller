@@ -1,7 +1,17 @@
+using System.Collections.Generic;
 using UnityEngine;
+
+public enum PlayerClass
+{
+    KNIGHT,
+    MAGE,
+    ROGUE,
+    WARRIOR
+}
 
 public class PlayerControls : MonoBehaviour
 {
+
     [SerializeField]
     private float speed = 500;
 
@@ -12,10 +22,28 @@ public class PlayerControls : MonoBehaviour
     private float gravity = 10;
 
     [SerializeField]
-    private Animator animator;
+    private GameObject visuals;
 
     [SerializeField]
-    private GameObject visuals;
+    private List<GameObject> knightVisualsPrefabs = new List<GameObject>();
+
+    [SerializeField]
+    private List<GameObject> mageVisualsPrefabs = new List<GameObject>();
+
+    [SerializeField]
+    private List<GameObject> rogueVisualsPrefabs = new List<GameObject>();
+
+    [SerializeField]
+    private List<GameObject> warriorVisualsPrefabs = new List<GameObject>();
+
+    [SerializeField]
+    private PlayerClass playerClass;
+
+    [SerializeField]
+    [Range(1,3)]
+    private int playerLevel;
+
+    private Animator animator;
 
     private float horizontalMovement = 0;
     private float verticalMovement = 0;
@@ -36,11 +64,20 @@ public class PlayerControls : MonoBehaviour
 
     private Rigidbody rb;
 
+    private void OnValidate()
+    {
+        if(Application.isPlaying)
+        {
+            TransformPlayer();
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         Physics.gravity = Vector3.down * gravity;
+        TransformPlayer();
     }
 
     // Update is called once per frame
@@ -87,6 +124,48 @@ public class PlayerControls : MonoBehaviour
         if (collision.gameObject.tag == "Terrain")
         {
             OnGround = false;
+        }
+    }
+
+    public void PickUp(PlayerClass pickupType)
+    {
+        if(playerClass == pickupType)
+        {
+            playerLevel = Mathf.Clamp(playerLevel+1,1,3);
+        }
+        else
+        {
+            playerClass = pickupType;
+        }
+        TransformPlayer();
+    }
+
+    void TransformPlayer()
+    {
+        for (int i = 0; i < visuals.transform.childCount; i++)
+        {
+            Destroy(visuals.transform.GetChild(i).gameObject);
+        }
+        GameObject visualPrefab = null;
+        switch (playerClass)
+        {
+            case PlayerClass.KNIGHT:
+                visualPrefab = knightVisualsPrefabs[playerLevel - 1];
+                break;
+            case PlayerClass.MAGE:
+                visualPrefab = mageVisualsPrefabs[playerLevel - 1];
+                break;
+            case PlayerClass.ROGUE:
+                visualPrefab = rogueVisualsPrefabs[playerLevel - 1];
+                break;
+            case PlayerClass.WARRIOR:
+                visualPrefab = warriorVisualsPrefabs[playerLevel - 1];
+                break;
+        }
+        if (visualPrefab != null)
+        {
+            GameObject newVisual = Instantiate(visualPrefab, visuals.transform.position, visuals.transform.rotation, visuals.transform);
+            animator = newVisual.GetComponentInChildren<Animator>();
         }
     }
 }
