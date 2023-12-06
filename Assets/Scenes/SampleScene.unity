@@ -1668,7 +1668,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &605293757
 Transform:
   m_ObjectHideFlags: 0
@@ -1798,7 +1798,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &620970134
 Transform:
   m_ObjectHideFlags: 0
@@ -9398,18 +9398,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1917819460378054276, guid: 0b367182b8eb40a438d71d9544a230db, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.85
-      objectReference: {fileID: 0}
-    - target: {fileID: 1917819460378054276, guid: 0b367182b8eb40a438d71d9544a230db, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.85
-      objectReference: {fileID: 0}
-    - target: {fileID: 1917819460378054276, guid: 0b367182b8eb40a438d71d9544a230db, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.85
-      objectReference: {fileID: 0}
     - target: {fileID: 2695345306454126595, guid: 0b367182b8eb40a438d71d9544a230db, type: 3}
       propertyPath: m_Name
       value: WarriorPower
@@ -9453,18 +9441,6 @@ PrefabInstance:
     - target: {fileID: 3697940231092317882, guid: 0b367182b8eb40a438d71d9544a230db, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7357683936115036939, guid: 0b367182b8eb40a438d71d9544a230db, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.85
-      objectReference: {fileID: 0}
-    - target: {fileID: 7357683936115036939, guid: 0b367182b8eb40a438d71d9544a230db, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.85
-      objectReference: {fileID: 0}
-    - target: {fileID: 7357683936115036939, guid: 0b367182b8eb40a438d71d9544a230db, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.85
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

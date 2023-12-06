@@ -146,6 +146,7 @@ public class PlayerControls : MonoBehaviour
         {
             Destroy(visuals.transform.GetChild(i).gameObject);
         }
+        visuals.transform.localScale = Vector3.one * (0.75f + (1-0.75f)/3f*playerLevel);
         GameObject visualPrefab = null;
         switch (playerClass)
         {

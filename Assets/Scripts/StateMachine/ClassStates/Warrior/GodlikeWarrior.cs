@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RogueState : MonoBehaviour
+public class GodlikeWarrior : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
