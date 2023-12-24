@@ -1,18 +1,33 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class WeakMageState : ClassState
 {
-    // Start is called before the first frame update
-    void Start()
+    public override void MainAttack()
     {
-        
+        Debug.Log($"Main attack of {GetType()}");
+    }
+    public override void SecondAttack()
+    {
+        Debug.Log($"Second attack of {GetType()}");
     }
 
-    // Update is called once per frame
-    void Update()
+    public override Type Transition(PlayerClass playerClass)
     {
-        
+        switch (playerClass)
+        {
+            case PlayerClass.KNIGHT:
+                return typeof(WeakKnightState);
+            case PlayerClass.MAGE:
+                return typeof(StrongMageState);
+            case PlayerClass.ROGUE:
+                return typeof(WeakRogueState);
+            case PlayerClass.WARRIOR:
+                return typeof(WeakWarriorState);
+        }
+        Debug.LogError($"No transition found between {GetType()} and {playerClass}.");
+        throw new NotImplementedException();
     }
 }

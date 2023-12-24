@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StrongWarriorState : ClassState
+public class GodlikeWarriorState : ClassState
 {
     public override void MainAttack()
     {
@@ -19,13 +19,11 @@ public class StrongWarriorState : ClassState
         switch (playerClass)
         {
             case PlayerClass.KNIGHT:
-                return typeof(StrongKnightState);
+                return typeof(GodlikeKnightState);
             case PlayerClass.MAGE:
-                return typeof(StrongMageState);
+                return typeof(GodlikeMageState);
             case PlayerClass.ROGUE:
-                return typeof(StrongRogueState);
-            case PlayerClass.WARRIOR:
-                return typeof(GodlikeWarriorState);
+                return typeof(GodlikeRogueState);
         }
         Debug.LogError($"No transition found between {GetType()} and {playerClass}.");
         throw new NotImplementedException();

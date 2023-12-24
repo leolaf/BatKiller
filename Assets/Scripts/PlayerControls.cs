@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public enum PlayerClass
@@ -27,6 +29,7 @@ public class PlayerControls : MonoBehaviour
     [SerializeField][Range(1,3)] private int playerLevel;
 
     private Animator animator;
+    private ClassState classState;
 
     private float horizontalMovement = 0;
     private float verticalMovement = 0;
@@ -49,9 +52,9 @@ public class PlayerControls : MonoBehaviour
 
     private void OnValidate()
     {
-        if(Application.isPlaying)
+        if(EditorApplication.isPlaying)
         {
-            TransformPlayer();
+            AdaptVisuals();
         }
     }
 
@@ -59,8 +62,9 @@ public class PlayerControls : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        classState = gameObject.AddComponent<WeakWarriorState>();
         Physics.gravity = Vector3.down * gravity;
-        TransformPlayer();
+        AdaptVisuals();
     }
 
     // Update is called once per frame
@@ -121,16 +125,26 @@ public class PlayerControls : MonoBehaviour
         {
             playerClass = pickupType;
         }
-        TransformPlayer();
+        TransformPlayer(pickupType);
     }
 
-    void TransformPlayer()
+    void TransformPlayer(PlayerClass playerClass)
+    {
+        Type newStateType = classState.Transition(playerClass);
+        if (newStateType == null)
+            return;
+        Destroy(classState);
+        classState = (ClassState) gameObject.AddComponent(newStateType);
+        AdaptVisuals();
+    }
+
+    void AdaptVisuals()
     {
         for (int i = 0; i < visuals.transform.childCount; i++)
         {
             Destroy(visuals.transform.GetChild(i).gameObject);
         }
-        visuals.transform.localScale = Vector3.one * (0.75f + (1-0.75f)/3f*playerLevel);
+        visuals.transform.localScale = Vector3.one * (0.75f + (1 - 0.75f) / 3f * playerLevel);
         GameObject visualPrefab = null;
         switch (playerClass)
         {
