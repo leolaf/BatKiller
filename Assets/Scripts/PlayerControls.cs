@@ -11,37 +11,20 @@ public enum PlayerClass
 
 public class PlayerControls : MonoBehaviour
 {
+    [SerializeField] private float speed = 500;
+    [SerializeField] private float jumpForce = 500;
+    [SerializeField] private float gravity = 10;
 
-    [SerializeField]
-    private float speed = 500;
 
-    [SerializeField]
-    private float jumpForce = 500;
+    [SerializeField] private GameObject visuals;
+    [SerializeField] private List<GameObject> knightVisualsPrefabs = new List<GameObject>();
+    [SerializeField] private List<GameObject> mageVisualsPrefabs = new List<GameObject>();
+    [SerializeField] private List<GameObject> rogueVisualsPrefabs = new List<GameObject>();
+    [SerializeField] private List<GameObject> warriorVisualsPrefabs = new List<GameObject>();
 
-    [SerializeField]
-    private float gravity = 10;
+    [SerializeField] private PlayerClass playerClass;
 
-    [SerializeField]
-    private GameObject visuals;
-
-    [SerializeField]
-    private List<GameObject> knightVisualsPrefabs = new List<GameObject>();
-
-    [SerializeField]
-    private List<GameObject> mageVisualsPrefabs = new List<GameObject>();
-
-    [SerializeField]
-    private List<GameObject> rogueVisualsPrefabs = new List<GameObject>();
-
-    [SerializeField]
-    private List<GameObject> warriorVisualsPrefabs = new List<GameObject>();
-
-    [SerializeField]
-    private PlayerClass playerClass;
-
-    [SerializeField]
-    [Range(1,3)]
-    private int playerLevel;
+    [SerializeField][Range(1,3)] private int playerLevel;
 
     private Animator animator;
 
@@ -83,7 +66,7 @@ public class PlayerControls : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        horizontalMovement = Input.GetAxis("Horizontal");
+        horizontalMovement = Input.GetAxisRaw("Horizontal");
         if(horizontalMovement != 0)
         {
             visuals.transform.rotation = Quaternion.Euler(0, 180 * (horizontalMovement < 0 ? 1 : 0), 0);
@@ -103,10 +86,11 @@ public class PlayerControls : MonoBehaviour
 
     private void FixedUpdate()
     {
-        rb.MovePosition(transform.position + Vector3.right * horizontalMovement * speed * Time.fixedDeltaTime);
+        Vector3 currentVelo = Vector3.right * horizontalMovement * speed * Time.fixedDeltaTime;
+        rb.velocity = new Vector2(currentVelo.x, rb.velocity.y);
         if(verticalMovement > 0)
         {
-            rb.velocity += new Vector3(0, verticalMovement, 0) * jumpForce;
+            rb.AddForce(new Vector3(0, verticalMovement, 0) * jumpForce);
             animator.SetTrigger("jump");
         }
     }
