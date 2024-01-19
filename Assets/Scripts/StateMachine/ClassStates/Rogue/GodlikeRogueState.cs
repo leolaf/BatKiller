@@ -22,6 +22,8 @@ public class GodlikeRogueState : ClassState
                 return typeof(GodlikeKnightState);
             case PlayerClass.MAGE:
                 return typeof(GodlikeMageState);
+            case PlayerClass.ROGUE:
+                return null;
             case PlayerClass.WARRIOR:
                 return typeof(GodlikeWarriorState);
         }

@@ -24,6 +24,8 @@ public class GodlikeWarriorState : ClassState
                 return typeof(GodlikeMageState);
             case PlayerClass.ROGUE:
                 return typeof(GodlikeRogueState);
+            case PlayerClass.WARRIOR:
+                return null;
         }
         Debug.LogError($"No transition found between {GetType()} and {playerClass}.");
         throw new NotImplementedException();

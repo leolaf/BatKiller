@@ -18,6 +18,8 @@ public class GodlikeKnightState : ClassState
     {
         switch (playerClass)
         {
+            case PlayerClass.KNIGHT:
+                return null;
             case PlayerClass.MAGE:
                 return typeof(GodlikeMageState);
             case PlayerClass.ROGUE:
